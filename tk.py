@@ -16,11 +16,36 @@ class Window(Frame):
         # allowing the widget to take the full space of the root window
         self.pack(fill=BOTH, expand=1)
 
-        # creating a button instance
-        quitButton = Button(self, text="Quit")
+        # creating a menu instance
+        menu = Menu(self.master)
+        self.master.config(menu=menu)
 
-        # placing the button on my window
-        quitButton.place(x=0, y=0)
+        # create the file object
+        file = Menu(menu)
+
+        # adds a command to the menu option, calling it exit, and the
+        # command it runs on event is client_exit
+        file.add_command(label="Exit", command=self.client_exit)
+
+        # added "file" to our menu
+        menu.add_cascade(label="File", menu=file)
+
+        # create the file object
+        edit = Menu(menu)
+
+        # adds a command to the edit option, calling it undo
+        edit.add_command(label="Undo")
+        menu.add_cascade(label="Edit", menu=edit)
+
+        # # creating a button instance
+        # quitButton = Button(self, text="Quit")
+
+        # # placing the button on my window
+        # quitButton.place(x=0, y=0)
+
+    def client_exit(self):
+        exit()
+    
 
 root = Tk()
 
