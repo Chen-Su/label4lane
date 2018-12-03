@@ -10,21 +10,19 @@ class Window(Frame):
 
     def __init__(self, master=None):
         Frame.__init__(self, master)
-        self.master = master
-        self.init_window()
         
         # variabels
         self.img_list = []  # list of image paths.
         self.cur_img = 0    # index of current showing image.
-    
+
+        self.init_window()    
+
 
     # Creation of init_window
     def init_window(self):
 
         # changing the title of our master widget 
         self.master.title("GUI")
-        # allowing the widget to take the full space of the root window
-        self.grid()
         
         # creating a menu instance
         menu = Menu(self.master)
@@ -44,12 +42,15 @@ class Window(Frame):
 
         rightButton = Button(self.master, text="next image", command=self.next_image)
         rightButton.grid(row=0, column=2)
-        
+
         # creating a status bar instance
         self.status = StringVar()
         statusBar = Label(self.master, anchor=W, textvariable=self.status)
         self.status.set('Status Bar')
         statusBar.grid(columnspan=3, sticky=E)
+
+        self.master.rowconfigure(0, minsize=800)
+        self.master.columnconfigure(1, minsize=600)
 
 
     def prev_image(self):
@@ -60,7 +61,7 @@ class Window(Frame):
 
 
     def next_image(self):
-        if(self.cur_img < len(self.img_list)):
+        if(self.cur_img < len(self.img_list)-1):
             self.cur_img += 1
         self.showImg()
         self.update_status()
@@ -73,6 +74,7 @@ class Window(Frame):
         self.img_list += glob.glob(imgs_path+'/*.PNG')
         self.img_list += glob.glob(imgs_path+'/*.jpg')
         self.img_list += glob.glob(imgs_path+'/*.JPG')
+        self.img_list.sort()
         self.showImg()
         self.update_status()
 
@@ -95,11 +97,15 @@ class Window(Frame):
         exit()
     
 
-root = Tk()
+# root = Tk()
 
 # size of the window
-root.geometry("400x300")
+# root.geometry("800x600")
 
-app = Window(root)
+# app = Window(root)
 
-root.mainloop()
+# root.mainloop()
+
+if __name__ == "__main__":
+    app = Window()
+    app.mainloop()
