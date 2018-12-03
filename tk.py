@@ -27,14 +27,8 @@ class Window(Frame):
         # creating a menu instance
         menu = Menu(self.master)
         self.master.config(menu=menu)
-        # create the file object
-        file = Menu(menu)
-        # adds a command to the menu option, calling it exit, and the
-        # command it runs on event is client_exit
-        file.add_command(label='Open Dir', command=self.open_dir)
-        file.add_command(label="Exit", command=self.client_exit)
-        # added "file" to our menu
-        menu.add_cascade(label="File", menu=file)
+        menu.add_command(label='Open Dir', command=self.open_dir)
+        menu.add_command(label="Exit", command=self.client_exit)
 
         # creating a button instance
         leftButton = Button(self.master, text="prev image", command=self.prev_image)
@@ -97,15 +91,7 @@ class Window(Frame):
         exit()
     
 
-# root = Tk()
-
-# size of the window
-# root.geometry("800x600")
-
-# app = Window(root)
-
-# root.mainloop()
-
 if __name__ == "__main__":
-    app = Window()
+    root = Tk()
+    app = Window(root)
     app.mainloop()
