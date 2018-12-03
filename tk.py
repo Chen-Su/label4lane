@@ -33,7 +33,8 @@ class Window(Frame):
         # creating a button instance
         leftButton = Button(self.master, text="prev image", command=self.prev_image)
         leftButton.grid(row=0, column=0)
-
+        self.imgView = Label(self.master)
+        self.imgView.grid(row=0, column=1)
         rightButton = Button(self.master, text="next image", command=self.next_image)
         rightButton.grid(row=0, column=2)
 
@@ -82,9 +83,8 @@ class Window(Frame):
         img_path = self.img_list[self.cur_img]
         load = Image.open(img_path)
         render = ImageTk.PhotoImage(load)
-        img = Label(self.master, image=render)
-        img.image = render
-        img.grid(row=0, column=1)
+        self.imgView.configure(image=render)
+        self.imgView.image = render
 
 
     def client_exit(self):
