@@ -20,42 +20,39 @@ class Window(Frame):
 
         # changing the title of our master widget 
         self.master.title("GUI")
-
         # allowing the widget to take the full space of the root window
-        # self.pack(fill=BOTH, expand=1)
         self.grid()
         
         # creating a menu instance
         menu = Menu(self.master)
         self.master.config(menu=menu)
-
         # create the file object
         file = Menu(menu)
-
         # adds a command to the menu option, calling it exit, and the
         # command it runs on event is client_exit
         file.add_command(label='Open Dir', command=self.open_dir)
         file.add_command(label="Exit", command=self.client_exit)
-
         # added "file" to our menu
         menu.add_cascade(label="File", menu=file)
 
-        # create the file object
-        edit = Menu(menu)
-
-        # adds a command to the edit option, calling it undo
-        edit.add_command(label="Show Img", command=self.showImg)
-        edit.add_command(label="Show Text", command=self.showText)
-
-        menu.add_cascade(label="Edit", menu=edit)
-
         # creating a button instance
-        quitButton = Button(self.master, text="Quit", command=self.client_exit)
+        leftButton = Button(self.master, text="prev image", command=self.prev_image)
+        leftButton.grid(row=0, column=0)
 
-        # placing the button on my window
-        # quitButton.place(x=0, y=0)
-        quitButton.grid(row=0, column=0)
+        rightButton = Button(self.master, text="next image", command=self.next_image)
+        rightButton.grid(row=0, column=2)
 
+
+    def prev_image(self):
+        if(self.cur_img > 0):
+            self.cur_img -= 1
+        self.showImg(self.img_list[self.cur_img])
+
+
+    def next_image(self):
+        if(self.cur_img < len(self.img_list)):
+            self.cur_img += 1
+        self.showImg(self.img_list[self.cur_img])
 
 
     # open images directory and show first image.
@@ -66,7 +63,7 @@ class Window(Frame):
         self.img_list += glob.glob(imgs_path+'/*.jpg')
         self.img_list += glob.glob(imgs_path+'/*.JPG')
         self.showImg(self.img_list[self.cur_img])
-        self.cur_img += 1
+
 
 
     def showImg(self, img_path):
@@ -78,12 +75,6 @@ class Window(Frame):
         img.image = render
         # img.place(x=0, y=0)
         img.grid(row=0, column=1)
-
-
-    def showText(self):
-        text = Label(self.master, text="Hey there good lookin!")
-        # text.pack()
-        text.grid(row=0, column=2)
 
 
     def client_exit(self):
