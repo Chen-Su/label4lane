@@ -22,8 +22,9 @@ class Window(Frame):
         self.master.title("GUI")
 
         # allowing the widget to take the full space of the root window
-        self.pack(fill=BOTH, expand=1)
-
+        # self.pack(fill=BOTH, expand=1)
+        self.grid()
+        
         # creating a menu instance
         menu = Menu(self.master)
         self.master.config(menu=menu)
@@ -52,7 +53,9 @@ class Window(Frame):
         quitButton = Button(self.master, text="Quit", command=self.client_exit)
 
         # placing the button on my window
-        quitButton.place(x=0, y=0)
+        # quitButton.place(x=0, y=0)
+        quitButton.grid(row=0, column=0)
+
 
 
     # open images directory and show first image.
@@ -71,14 +74,16 @@ class Window(Frame):
         load = Image.open(img_path)
         render = ImageTk.PhotoImage(load)
         # labels can be text or images
-        img = Label(self, image=render)
+        img = Label(self.master, image=render)
         img.image = render
-        img.place(x=0, y=0)
+        # img.place(x=0, y=0)
+        img.grid(row=0, column=1)
 
 
     def showText(self):
-        text = Label(self, text="Hey there good lookin!")
-        text.pack()
+        text = Label(self.master, text="Hey there good lookin!")
+        # text.pack()
+        text.grid(row=0, column=2)
 
 
     def client_exit(self):
