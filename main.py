@@ -15,6 +15,7 @@ class App(Frame):
         self.img_list = []
         self.pivot_x = 0
         self.pivot_y = 0
+
         self.initUI()
 
     def initUI(self):
@@ -32,6 +33,7 @@ class App(Frame):
         self.canvas.grid(row=0, column=1, sticky=N+S+E+W)
         self.canvas.bind("<Configure>", self.rescale)
         self.canvas.bind("<Motion>", self.updateCoords)
+        self.canvas.bind("<Button-1>", self.drawPoints)
         # self.img_handle = 0
 
         prev_button = Button(self, text='prev', command=self.prevImg)
@@ -50,6 +52,11 @@ class App(Frame):
         self.coords.set('Coordinates Bar')
         coords_bar = Label(status_frame, textvariable=self.coords)
         coords_bar.pack(side=LEFT)
+
+    def drawPoints(self, event):
+        x = self.canvas.canvasx(event.x)
+        y = self.canvas.canvasy(event.y)
+        self.canvas.create_oval(x-2,y-2,x+2,y+2,fill="green", outline="green")
 
     def rescale(self, event):
         if(len(self.img_list) == 0):
